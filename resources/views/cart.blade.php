@@ -13,16 +13,16 @@
         @endcomponent
     </div>
 
-    <div class="bg-gray-100 px-10 py-6 mt-10 ">
+    <div class="bg-gray-100 px-10 py-6 mt-10 rounded-lg border-2 border-gray-400">
         <div>
             @if (session()->has('success_message'))
-                <div class="text-xl font-bold text-gray-500 my-4 bg-green-300 py-2 px-6">
+                <div class="text-xl text-gray-500  my-4 bg-green-200 py-2 px-6 rounded-lg border border-gray-200">
                     {{ session()->get('success_message') }}
                 </div>
             @endif
 
             @if(count($errors) > 0)
-                <div class="text-xl font-bold text-gray-500 my-4 bg-red-300 px-6 py-2">
+                <div class="text-xl text-gray-500  my-4 bg-red-200 py-2 px-6 rounded-lg border border-gray-200">
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -37,15 +37,15 @@
 
                 <div class="my-6">
                     @foreach (Cart::content() as $item)
-                    <div class="cart-table-row border-b-2 border-gray-300 border-t-2  py-5">
+                    <div class="cart-table-row border-gray-300 border-b-2  py-5">
                         <div class="w-full flex justify-evenly">
-                            <a href="{{ route('shop.show', $item->model->slug) }}"><img class="" src="{{ asset('/storage/'.$item->model->image) }}" alt="product"></a>
+                            <a href="{{ route('shop.show', $item->model->slug) }}"><img class="w-20 h-auto " src="{{ productImage($item->model->image) }}" alt="product"></a>
                             <div class="cart-item-details">
                                 <div class="cart-table-item"><a href="{{ route('shop.show', $item->model->slug) }}">{{ $item->model->name }}</a></div>
                                 <div class="cart-table-description">{{ $item->model->details }}</div>
                             </div>
                             <div>
-                                <select class="quantity" data-id="{{ $item->rowId }}" data-productQuantity="{{ $item->model->quantity }}">
+                                <select class="quantity " data-id="{{ $item->rowId }}" data-productQuantity="{{ $item->model->quantity }}">
                                     @for ($i = 1; $i < 5 + 1 ; $i++)
                                         <option {{ $item->qty == $i ? 'selected' : '' }}>{{ $i }}</option>
                                     @endfor
@@ -73,29 +73,33 @@
               
 
                 <div class="cart-totals flex mt-10 ">
-                    <div class="text-xl  w-2/3 -mr-10">
+                    <div class="text-xl  w-2/3 mr-6">
                         Shipping is free because we’re awesome like that. Also because that’s additional stuff I don’t feel like figuring out :).
                     </div>
 
-                    <div class="text-lg  w-1/3 flex justify-between">
-                        <div class="ml-20">
-                            Subtotal <br>
-                      
-                            Tax ({{config('cart.tax')}}%)<br>
-                            <span class="cart-totals-total font-bold">Total</span>
-                        </div>
-                        <div class="cart-totals-subtotal">
-                            {{ presentPrice(Cart::subtotal()) }} <br>
-                       
-                            {{ presentPrice($newTax) }} <br>
-                            <span class="cart-totals-total font-bold">{{ presentPrice($newTotal) }}</span>
-                        </div>
+                    <div class="text-lg  w-1/3 flex justify-between ml-10">
+                        <table class="text-left w-full">
+		                    <tbody class="bg-grey-100 flex flex-col font-bold" >
+                                <tr class="flex w-full divide-x-2 divide-gray-400 border-2 border-gray-400">
+                                    <td class="p-3 w-1/2">Subtotal</td>
+                                    <td class="p-3 w-1/2 ">{{ presentPrice(Cart::subtotal()) }}</td>
+                                </tr>
+                                <tr class="flex w-full divide-x-2 divide-gray-400 border-l-2 border-r-2 border-gray-400">
+                                    <td class="p-3 w-1/2 ">Tax ({{config('cart.tax')}}%)</td>
+                                    <td class="p-3 w-1/2 ">{{ presentPrice($newTax) }}</td>
+                                </tr>
+                                <tr class="flex w-full divide-x-2 divide-gray-400 border-2 border-gray-400">
+                                    <td class="p-3 w-1/2 ">Total</td>
+                                    <td class="p-3 w-1/2 ">{{ presentPrice($newTotal) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div> <!-- end cart-totals -->
 
                 <div class="mt-6 flex justify-between mx-5">
                     <a class="px-4 py-2 border-2 border-gray-500 bg-gray-100 hover:bg-black hover:text-white hover:font-bold hover:border-black" href="{{ route('shop.index') }}" >Continue Shopping</a>
-                    <a class="px-4 py-2 bg-green-300 hover:bg-green-700 hover:text-white hover:font-bold " href="{{ route('checkout.index') }}">Proceed to Checkout</a>
+                    <a class="px-4 py-2 bg-green-300 border  hover:bg-green-500 hover:text-white hover:font-bold " href="{{ route('checkout.index') }}">Proceed to Checkout</a>
                 </div>
             @else
                 <h3>No items in Cart!</h3>

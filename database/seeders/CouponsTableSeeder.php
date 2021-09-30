@@ -23,7 +23,7 @@ class CouponsTableSeeder extends Seeder
         Coupon::create([
             'code' => 'DEF456',
             'type' => 'percent',
-            'value' => 50
+            'percent_off' => 50
         ]);
     }
 }

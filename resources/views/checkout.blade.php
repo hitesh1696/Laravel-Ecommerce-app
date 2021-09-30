@@ -28,7 +28,7 @@
                 <div class="text-xl font-bold text-gray-500 my-4 bg-red-300 px-6 py-2">
                     <ul>
                         @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                            <li>{!! $error !!}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -58,29 +58,69 @@
                         <input type="text" class="px-4 py-2 border border-gray-300 bg-gray-100 w-full" id="address" name="address" value="{{ old('address') }}" required>
                     </div>
 
-                    <div class="flex justify-between">
-                        <div class="form-group">
+                    <div class="flex ">
+                        <div class="w-1/2 mr-4">
                             <label class="text-lg my-2 font-medium" for="city">City</label>
                             <input type="text" class="px-4 py-2 border border-gray-300 bg-gray-100 w-full" id="city" name="city" value="{{ old('city') }}" required>
                         </div>
-                        <div class="form-group">
+                        <div class="w-1/2 ml-4">
                             <label class="text-lg my-2 font-medium" for="province">Province</label>
                             <input type="text" class="px-4 py-2 border border-gray-300 bg-gray-100 w-full" id="province" name="province" value="{{ old('province') }}" required>
                         </div>
                     </div> <!-- end half-form -->
 
-                    <div class="flex justify-between">
-                        <div class="form-group">
+                    <div class="flex ">
+                        <div class="w-1/2 mr-4">
                             <label class="text-lg my-2 font-medium" for="postalcode">Postal Code</label>
                             <input type="text" class="px-4 py-2 border border-gray-300 bg-gray-100 w-full" id="postalcode" name="postalcode" value="{{ old('postalcode') }}" required>
                         </div>
-                        <div class="form-group">
+                        <div class="w-1/2 ml-4">
                             <label class="text-lg my-2 font-medium" for="phone">Phone</label>
                             <input type="text" class="px-4 py-2 border border-gray-300 bg-gray-100 w-full" id="phone" name="phone" value="{{ old('phone') }}" required>
                         </div>
                     </div> <!-- end half-form -->
 
-                    <div class="spacer"></div>
+                    <!-- Shipping address  -->
+                    <div class="">
+                
+                        <h2 class="text-xl font-semibold py-4">Shipping Address</h2>
+
+                        <div class="form-group">
+                            <label class="text-lg my-2 font-medium" for="email">Email Address</label>
+                            <input type="email" class="px-4 py-2 border border-gray-300 bg-gray-100 w-full"  >
+                       </div>
+                        <div class="form-group ">
+                            <label class="text-lg my-2 font-medium" for="name">Name</label>
+                            <input type="text" class="px-4 py-2 border border-gray-300 bg-gray-100 w-full" >
+                        </div>
+                        <div class="form-group">
+                            <label class="text-lg my-2 font-medium" for="address">Address</label>
+                            <input type="text" class="px-4 py-2 border border-gray-300 bg-gray-100 w-full">
+                        </div>
+
+                        <div class="flex ">
+                            <div class="w-1/2 mr-4">
+                                <label class="text-lg my-2 font-medium" for="city">City</label>
+                                <input type="text" class="px-4 py-2 border border-gray-300 bg-gray-100 w-full"  >
+                            </div>
+                            <div class="w-1/2 ml-4">
+                                <label class="text-lg my-2 font-medium" for="province">Province</label>
+                                <input type="text" class="px-4 py-2 border border-gray-300 bg-gray-100 w-full">
+                            </div>
+                        </div> <!-- end half-form -->
+
+                        <div class="flex ">
+                            <div class="w-1/2 mr-4">
+                                <label class="text-lg my-2 font-medium" for="postalcode">Postal Code</label>
+                                <input type="text" class="px-4 py-2 border border-gray-300 bg-gray-100 w-full"  >
+                            </div>
+                            <div class="w-1/2 ml-4">
+                                <label class="text-lg my-2 font-medium" for="phone">Phone</label>
+                                <input type="text" class="px-4 py-2 border border-gray-300 bg-gray-100 w-full">
+                            </div>
+                    </div> <!-- end half-form -->
+                    <!-- Shiping Address End  -->
+                </div>
 
                     <h2 class="text-xl font-semibold py-4">Payment Details</h2>
 
@@ -103,6 +143,10 @@
                     <div class="spacer"></div>
                     <button id="complete-order" type="submit" class="complete-order mt-5 px-4 py-2 border-2 border-gray-500 bg-gray-100 hover:bg-black hover:text-white hover:font-bold hover:border-black ">Complete Order</button>
                 </form>
+
+
+
+                
             </div>
             <div class="w-1/12"></div>
             <div class="checkout-table-container w-4/12 ml-">
@@ -110,54 +154,62 @@
 
                 <div class="checkout-table mt-4 border-b-2 border-t-2 py-5 border-gray-500">
                     @foreach (Cart::content() as $item)
-                    <div class="checkout-table-row flex ">
-                        <div class="checkout-table-row-left flex w-3/4  justify-around">
-                        <a href="{{ route('shop.show', $item->model->slug) }}"><img class="w-16 h-16" src="{{ asset('/storage/'.$item->model->image) }}" alt="product" ></a>
-                            <div class="checkout-item-details">
-                                <div class="checkout-table-item">{{ $item->model->name }}</div>
-                                <div class="checkout-table-description">{{ $item->model->details }}</div>
-                                <div class="checkout-table-price">{{ $item->model->presentPrice() }}</div>
-                            </div>
-                        </div> <!-- end checkout-table -->
-
-                        <div class="checkout-table-row-right w-1/4 flex justify-center items-center">
-                            <div class="checkout-table-quantity p-2 border border-gray-300">{{ $item->qty }}</div>
-                        </div>
-                    </div> <!-- end checkout-table-row -->
+                        <table class="text-left w-full">
+                            <tbody class="bg-grey-100 flex flex-col font-bold" >
+                                <tr class="flex w-full divide-x-2 divide-gray-400 border-2 border-gray-400">
+                                    <td class="p-3 w-1/5">
+                                        <a href="{{ route('shop.show', $item->model->slug) }}"><img class="w-16 h-16" src="{{ asset('/storage/'.$item->model->image) }}" alt="product" ></a>
+                                    </td>
+                                    <td class="p-3 w-3/5 ">
+                                        <div class="checkout-item-details">
+                                            <div class="checkout-table-item">{{ $item->model->name }}</div>
+                                            <div class="checkout-table-description">{{ $item->model->details }}</div>
+                                            <div class="checkout-table-price">{{ $item->model->presentPrice() }}</div>
+                                        </div>
+                                    </td>
+                                    <td class="p-3 w-1/5 ">
+                                        <div class="flex justify-center items-center">{{ $item->qty }}</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     @endforeach
 
                 </div> <!-- end checkout-table -->
 
-                <div class="checkout-totals flex justify-between border-b-2 border-gray-500 pb-5"">
-                    <div class="checkout-totals-left mx-4">
-                        <p class="text-lg font-medium py-2">Subtotal</p>
-                        @if (session()->has('coupon'))
-                            <div class="inline-flex">
-                                <p class="text-lg font-medium py-2"> Discount ( {{ session()->get('coupon')['name'] }} ) :</p> 
-                                <form action="{{ route('coupon.destroy') }}" method="POST" class="inline-flex">
-                                    {{ csrf_field() }}
-                                    {{ method_field('delete') }}
-                                    <button type="submit" style="font-size:14px;">Remove</button>
-                                </form>
-                            </div>
-                            <p class="text-lg font-medium py-2">New Subtotal</p>
-                        @endif
-                            <p class="text-lg font-medium py-2">Tax ({{config('cart.tax')}}%)</p>
-                            <span class="text-xl font-bold py-2">Total</span>
-
-                    </div>
-
-                    <div class="checkout-totals-right">
-                        <p class="text-lg font-medium py-2">{{ presentPrice(Cart::subtotal()) }}</p> 
-                        @if (session()->has('coupon'))
-                            <p class="text-lg font-medium py-2">-{{ presentPrice($discount) }}</p>
-                           
-                            <p class="text-lg font-medium py-2">{{ presentPrice($newSubtotal) }} </p>
-                        @endif
-                        <p class="text-lg font-medium py-2">{{ presentPrice($newTax) }} </p>
-                        <span class="text-xl font-bold py-2">{{ presentPrice($newTotal) }}</span>
-
-                    </div>
+                <div class="checkout-totals flex justify-between border-b-2 border-gray-500 pb-5 mt-5">       
+                    <table class="text-left w-full">
+                        <tbody class="bg-grey-100 flex flex-col font-bold" >
+                            <tr class="flex w-full divide-x-2 divide-gray-400 border-2 border-gray-400">
+                                <td class="p-3 w-1/2">Subtotal</td>
+                                <td class="p-3 w-1/2 ">{{ presentPrice(Cart::subtotal()) }}</td>
+                            </tr>
+                            @if (session()->has('coupon'))
+                            <tr class="flex w-full divide-x-2 divide-gray-400 border-l-2 border-r-2 border-b-2 border-gray-400">
+                                <td class="p-3 w-1/2 ">Discount ( {{ session()->get('coupon')['name'] }} ) :
+                                    <form action="{{ route('coupon.destroy') }}" method="POST" class="inline-flex">
+                                        {{ csrf_field() }}
+                                        {{ method_field('delete') }}
+                                        <button type="submit" style="font-size:14px;">Remove</button>
+                                    </form>
+                                </td>
+                                <td class="p-3 w-1/2 ">-{{ presentPrice($discount) }}</td>
+                            </tr>
+                            <tr class="flex w-full divide-x-2 divide-gray-400 border-l-2 border-r-2 border-b-2 border-gray-400">
+                                <td class="p-3 w-1/2 ">New Subtotal</td>
+                                <td class="p-3 w-1/2 ">{{ presentPrice($newSubtotal) }}</td>
+                            </tr>
+                            @endif
+                            <tr class="flex w-full divide-x-2 divide-gray-400 border-l-2 border-r-2 border-gray-400">
+                                <td class="p-3 w-1/2 ">Tax ({{config('cart.tax')}}%)</td>
+                                <td class="p-3 w-1/2 ">{{ presentPrice($newTax) }}</td>
+                            </tr>
+                            <tr class="flex w-full divide-x-2 divide-gray-400 border-2 border-gray-400">
+                                <td class="p-3 w-1/2 ">Total</td>
+                                <td class="p-3 w-1/2 ">{{ presentPrice($newTotal) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div> <!-- end checkout-totals -->
 
                 @if (! session()->has('coupon'))

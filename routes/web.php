@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaveForLaterController;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use TCG\Voyager\Facades\Voyager;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +23,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $product = Product::find(46);
+    $products = Product::all();
 
-    return view('welcome')->with(['product' => $product]);
+    return view('welcome')->with(['products' => $products]);
 });
 Route::get('/shop',[ProductController::class, 'index'])->name('shop.index');
 Route::get('/shop/{slug}',[ProductController::class, 'show'])->name('shop.show');
@@ -42,13 +44,19 @@ Route::post('/coupon', [CouponsController::class, 'store'])->name('coupon.store'
 Route::delete('/coupon', [CouponsController::class, 'destroy'])->name('coupon.destroy');
 
 
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index')->middleware('auth');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 Route::post('/paypal-checkout', 'CheckoutController@paypalCheckout')->name('checkout.paypal');
 
 Route::get('/thank-you', [Controller::class, 'index'])->name('confirmation.index');
 
+Route::get('/guestCheckout', [CheckoutController::class, 'index'])->name('guestCheckout.index');
+
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

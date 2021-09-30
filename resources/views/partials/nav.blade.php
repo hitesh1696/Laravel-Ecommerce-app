@@ -63,9 +63,11 @@
                     @endforeach --}}
                 @endif
 
+                  
+
                 @guest
-                    <a href="#" class="block text-md px-4 py-2 rounded text-blue-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0">Sign in</a>
-                    <a href="#" class=" block text-md px-4  ml-2 py-2 rounded text-blue-700 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0">login</a>
+                    <a href="/register" class="block text-md px-4 py-2 rounded text-blue-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0">Sign in</a>
+                    <a href="/login" class=" block text-md px-4  ml-2 py-2 rounded text-blue-700 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0">login</a>
                 @else
                     
                     <div class=" relative inline-block text-left dropdown">
@@ -85,8 +87,14 @@
                                 <a href="javascript:void(0)" tabindex="0" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >Account settings</a>
                                 <a href="javascript:void(0)" tabindex="2" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left" role="menuitem" >License</a></div>
                                 <div class="py-1">
-                                <a href="" onclick="event.preventDefault();  document.getElementById('logout-form').submit(); tabindex="3" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >Log Out</a></div>
-                                <form id="logout-form" action="#" method="POST" style="display: none;">
+                                <a href="{{ route('logout') }}"
+                                    class="block text-md px-4  ml-2 py-2 rounded text-blue-700 font-bold hover:text-black mt-4  lg:mt-0"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                 </form>
                             </div>
