@@ -22,13 +22,13 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        // if (Cart::instance('default')->count() == 0) {
-        //     return redirect()->route('shop.index');
-        // }
+        if (Cart::instance('default')->count() == 0) {
+            return redirect()->route('shop.index');
+        }
 
-        // if (auth()->user() && request()->is('guestCheckout')) {
-        //     return redirect()->route('checkout.index');
-        // }
+        if (auth()->user() && request()->is('guestCheckout')) {
+            return redirect()->route('checkout.index');
+        }
 
         // $gateway = new \Braintree\Gateway([
         //     'environment' => config('services.braintree.environment'),
@@ -37,14 +37,14 @@ class CheckoutController extends Controller
         //     'privateKey' => config('services.braintree.privateKey')
         // ]);
 
-        // try {
-        //     $paypalToken = $gateway->ClientToken()->generate();
-        // } catch (\Exception $e) {
-        //     $paypalToken = null;
-        // }
+        try {
+            $paypalToken = $gateway->ClientToken()->generate();
+        } catch (\Exception $e) {
+            $paypalToken = null;
+        }
 
         return view('checkout')->with([
-            // 'paypalToken' => $paypalToken,
+            'paypalToken' => $paypalToken,
             'discount' => getNumbers()->get('discount'),
             'newSubtotal' => getNumbers()->get('newSubtotal'),
             'newTax' => getNumbers()->get('newTax'),
@@ -91,7 +91,7 @@ class CheckoutController extends Controller
            
 
             // // decrease the quantities of all the products in the cart
-            // $this->decreaseQuantities();
+            $this->decreaseQuantities();
 
             Cart::instance('default')->destroy();
             session()->forget('coupon');

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Jobs;
-
+use App\Models\Coupon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;

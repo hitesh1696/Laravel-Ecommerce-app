@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $perPage = 9;
+        $perPage = 12;
         $categories = Category::all();
 
         //Fetch By Category
@@ -44,8 +44,11 @@ class ProductController extends Controller
     public function show($slug){
         $product = Product::where('slug', $slug)->first();
         $mightAlsoLike = Product::where('slug', '!=', $slug)->inRandomOrder()->take(4)->get();
+        $stockLevel = getStockLevel($product->quantity);
+
         return view('product')->with([
             'product' => $product,
+            'stockLevel' => $stockLevel,
             'mightAlsoLike' => $mightAlsoLike
         ]);
     }

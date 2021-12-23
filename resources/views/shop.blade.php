@@ -8,7 +8,7 @@
     }
 </style>
 @section('content')
-<div class="py-12 bg-gray-100 font-serif">
+<div class="py-12 bg-gray-100 font-serif mt-16">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <h1 class=" text-3xl uppercase text-center items-center mb-6 font-semibold">Products</h1>
         <div class="flex bg-white overflow-hidden shadow-xl sm:rounded-lg  px-12 py-8">

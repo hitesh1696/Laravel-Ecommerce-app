@@ -6,7 +6,7 @@
 @section('content')
 <div class="py-12 bg-gray-100">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <h1 class="text-xl text-center items-center my-2 font-semibold py-4">Search results for "{{ $result }}"</h1>
+        <h1 class="text-xl text-center items-center my-2 font-semibold py-4">{{ $products->count() }} results for "{{ $result }}"</h1>
             <div class="flex bg-white overflow-hidden shadow-xl sm:rounded-lg  px-12 py-8">
                <div class="below-pagination grid grid-cols-4 gap-4 mt-4">
                     @forelse($products as $product)

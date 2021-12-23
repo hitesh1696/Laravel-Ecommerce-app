@@ -1,11 +1,13 @@
 <?php
 
+
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CouponsController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaveForLaterController;
+use App\Http\Controllers\Voyager\UsersController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +25,7 @@ use TCG\Voyager\Facades\Voyager;
 */
 
 Route::get('/', function () {
-    $products = Product::all();
+    $products = Product::inRandomOrder()->get();
 
     return view('welcome')->with(['products' => $products]);
 });
@@ -46,7 +48,7 @@ Route::delete('/coupon', [CouponsController::class, 'destroy'])->name('coupon.de
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index')->middleware('auth');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
-Route::post('/paypal-checkout', 'CheckoutController@paypalCheckout')->name('checkout.paypal');
+// Route::post('/paypal-checkout', 'CheckoutController@paypalCheckout')->name('checkout.paypal');
 
 Route::get('/thank-you', [Controller::class, 'index'])->name('confirmation.index');
 
@@ -59,4 +61,10 @@ Route::group(['prefix' => 'admin'], function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware('auth')->group(function () {
+    Route::get('/my-profile', [UsersController::class, 'edit'])->name('users.edit');
+    Route::patch('/my-profile', [UsersController::class, 'update'])->name('users.update');
+
+    Route::get('/my-orders', 'OrdersController@index')->name('orders.index');
+    Route::get('/my-orders/{order}', 'OrdersController@show')->name('orders.show');
+});

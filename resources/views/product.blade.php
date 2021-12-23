@@ -185,15 +185,19 @@
                         <a class="text-xl mt-3 font-bold text-gray-700 uppercase">{{ $product->name }}</a> <br>
                         <p class=" font-bold text-2xl">{{ $product->presentPrice() }}</p>
                     </div>
-                    <div class="mt-6 flex border-b-2 border-gray-300 pb-4">
-                        <form action="{{ route('cart.store', $product) }}" method="POST">
-                            {{ csrf_field() }}
-                            <button type="submit" class="px-6 py-2 border-2 border-red-300 rounded-lg hover:bg-red-300 hover:text-white hover:font-bold">Add to Cart</button>
-                        </form>    
-                        <form class="ml-6" action="{{ route('cart.store', $product) }}" method="POST">
-                            {{ csrf_field() }}
-                            <button type="submit" class="px-6 py-2 bg-red-300 border-2 border-red-300 rounded-lg hover:bg-red-500 hover:text-white hover:font-bold">Buy It Now</button>
-                        </form>       
+                    <div class="mt-2">{!! $stockLevel !!}</div>
+                    <div class="mt-3 flex border-b-2 border-gray-300 pb-4">
+                        @if($product->quantity > 0)
+                            <form action="{{ route('cart.store', $product) }}" method="POST">
+                                {{ csrf_field() }}
+                                <button type="submit" class="px-6 py-2 border-2 border-red-300 rounded-lg hover:bg-red-300 hover:text-white hover:font-bold">Add to Cart</button>
+                            </form>    
+                        
+                            <form class="ml-6" action="{{ route('cart.store', $product) }}" method="POST">
+                                {{ csrf_field() }}
+                                <button type="submit" class="px-6 py-2 bg-red-300 border-2 border-red-300 rounded-lg hover:bg-red-500 hover:text-white hover:font-bold">Buy It Now</button>
+                            </form> 
+                        @endif     
                         <form class="ml-6" action="{{ route('cart.store', $product) }}" method="POST">
                             {{ csrf_field() }}
                             <button type="submit" class="px-4 py-2  border-2 border-red-300 rounded-lg hover:bg-red-500 hover:text-white hover:font-bold"><i class="fa fa-heart text-red-400 hover:text-white"></i> </button>

@@ -187,7 +187,7 @@
                                                     @endif
                                                 @else
                                                     @include('voyager::multilingual.input-hidden-bread-browse')
-                                                    @if ($row->display_name == 'billing_discout')
+                                                    @if ($row->display_name == 'billing_discount')
                                                         <span>${{ $data->{$row->field} /100 }}</span>
                                                     @elseif($row->display_name == 'billing_subtotal')
                                                         <span>${{ $data->{$row->field} /100 }}</span>

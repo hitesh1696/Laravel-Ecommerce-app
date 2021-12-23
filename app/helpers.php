@@ -48,11 +48,11 @@ function getNumbers()
 function getStockLevel($quantity)
 {
     if ($quantity > setting('site.stock_threshold', 5)) {
-        $stockLevel = '<div class="badge badge-success">In Stock</div>';
+        $stockLevel = '<div class="text-green-500 font-bold text-lg">In Stock</div>';
     } elseif ($quantity <= setting('site.stock_threshold', 5) && $quantity > 0) {
-        $stockLevel = '<div class="badge badge-warning">Low Stock</div>';
+        $stockLevel = '<div class="badge badge-warning text-red-300 font-bold text-lg">Low Stock</div>';
     } else {
-        $stockLevel = '<div class="badge badge-danger">Not available</div>';
+        $stockLevel = '<div class="badge badge-danger text-red-500 font-bold text-lg">Not available</div>';
     }
 
     return $stockLevel;
