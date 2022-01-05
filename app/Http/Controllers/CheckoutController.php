@@ -73,7 +73,7 @@ class CheckoutController extends Controller
         try {
             $charge = Stripe::charges()->create([
                 'amount' => getNumbers()->get('newTotal') / 100,
-                'currency' => 'INR',
+                'currency' => 'INR', 
                 'source' => $request->stripeToken,
                 'description' => 'Order',
                 'receipt_email' => $request->email,
@@ -93,9 +93,9 @@ class CheckoutController extends Controller
             // // decrease the quantities of all the products in the cart
             $this->decreaseQuantities();
 
+            return redirect()->route('confirmation.index', ['order'=>$order])->with('success_message', 'Thank you! Your payment has been successfully accepted! And your Product should be delivered soon...');
             Cart::instance('default')->destroy();
             session()->forget('coupon');
-            return redirect()->route('confirmation.index')->with('success_message', 'Thank you! Your payment has been successfully accepted! And your Product should be delivered soon...');
 
         } catch (\CardErrorException $e) {
             $this->addToOrdersTables($request, $e->getMessage());

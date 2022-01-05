@@ -10,7 +10,7 @@ use App\Http\Controllers\SaveForLaterController;
 use App\Http\Controllers\Voyager\UsersController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route; 
 use TCG\Voyager\Facades\Voyager;
 
 /*
@@ -25,9 +25,9 @@ use TCG\Voyager\Facades\Voyager;
 */
 
 Route::get('/', function () {
-    $products = Product::inRandomOrder()->get();
-
-    return view('welcome')->with(['products' => $products]);
+    // $products = Product::inRandomOrder()->get();
+    return view('thank-you');
+    // return view('welcome')->with(['products' => $products]);
 });
 Route::get('/shop',[ProductController::class, 'index'])->name('shop.index');
 Route::get('/shop/{slug}',[ProductController::class, 'show'])->name('shop.show');
@@ -53,7 +53,7 @@ Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.s
 Route::get('/thank-you', [Controller::class, 'index'])->name('confirmation.index');
 
 Route::get('/guestCheckout', [CheckoutController::class, 'index'])->name('guestCheckout.index');
-
+    
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

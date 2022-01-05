@@ -19,15 +19,8 @@ class ViewLandingPageTest extends TestCase
     /** @test */
     public function landing_page_loads_correctly()
     {
-        //Arrange
-
-        //Act
         $response = $this->get('/');
-
-        //Assert
         $response->assertStatus(200);
-        $response->assertSee('Laravel Ecommerce');
-        $response->assertSee('Includes multiple products');
     }
 
     /** @test */
@@ -57,11 +50,7 @@ class ViewLandingPageTest extends TestCase
             'name' => 'Laptop 1',
             'price' => 149999,
         ]);
-
-        // Act
         $response = $this->get('/');
-
-        // Assert
         $response->assertDontSee($notFeaturedProduct->name);
         $response->assertDontSee('$1499.99');
     }
